@@ -1,23 +1,23 @@
-import logo from './logo.svg';
+import React, { useState, useEffect } from 'react';
 import './App.css';
+import getGifts from './services/getGifts';
 
 function App() {
+  const [gifts, updateGifts] = useState([]);
+
+  useEffect(() => {
+    getGifts({ keyword: 'bayern' }).then((gifts) => updateGifts(gifts));
+  }, []);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div className="App-content">
+        {gifts.map((gift) => (
+          <img src={gift} alt="" />
+        ))}
+
+        <button onClick={() => updateGifts([])}>Cambiar gifts</button>
+      </div>
     </div>
   );
 }
