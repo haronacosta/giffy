@@ -1,22 +1,24 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import './App.css';
-import getGifts from './services/getGifts';
+import ListOfGifts from './components/ListOfGifts';
+import { Route, Link } from 'wouter';
 
 function App() {
-  const [gifts, updateGifts] = useState([]);
-
-  useEffect(() => {
-    getGifts({ keyword: 'bayern' }).then((gifts) => updateGifts(gifts));
-  }, []);
-
   return (
     <div className="App">
       <div className="App-content">
-        {gifts.map((gift) => (
-          <img src={gift} alt="" />
-        ))}
+        <h1>App de gifs</h1>
+        <Link className="link" href="/gif/batman">
+          Gif de Batman
+        </Link>
+        <Link className="link" href="/gif/superman">
+          Gif de Superman
+        </Link>
+        <Link className="link" href="/gif/aquaman">
+          Gif de Aquaman
+        </Link>
 
-        <button onClick={() => updateGifts([])}>Cambiar gifts</button>
+        <Route path="/gif/:keyword" component={ListOfGifts} />
       </div>
     </div>
   );
